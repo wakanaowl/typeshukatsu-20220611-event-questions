@@ -23,45 +23,31 @@ func sort(array []int) []int {
 	pivot := array[0]
 
 	// ここから記述
-	pl := 0
-	right := len(array) - 1
-	pr := right
+	right := len(array) - 1 //配列の右端
+	pr := right             //右カーソル
+	pl := 0                 //左カーソル
 
 	for pl <= pr {
 		for array[pl] < pivot {
-			pl++
+			pl++ //基準値より大きい値を左から探す
 		}
 		for array[pr] > pivot {
-			pr--
+			pr-- //基準値より小さい値を右から探す
 		}
 
 		if pl <= pr {
-			array[pr], array[pl] = array[pl], array[pr]
+			array[pr], array[pl] = array[pl], array[pr] //配列の要素入れ替え
 			pl++
 			pr--
 		}
 	}
 
-	fmt.Println("-----------------")
-
-	for i := 0; i <= pl-1; i++ {
-		fmt.Println(array[i])
+	if pr >= 0 {
+		sort(array[0 : pr+1]) //基準値未満の配列でsortを呼び出す
 	}
 
-	fmt.Println("-----------------")
-
-	for i := pr + 1; i < len(array)-1; i++ {
-		fmt.Println(array[i])
-	}
-
-	fmt.Println("-----------------")
-
-	if pr > 0 {
-		sort(array[0:pr])
-	}
-
-	if pl < right {
-		sort(array[pl:right])
+	if pl <= right {
+		sort(array[pl : right+1]) //基準値以上の配列でsortを呼び出す
 	}
 
 	return array
